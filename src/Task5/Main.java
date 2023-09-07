@@ -11,7 +11,7 @@
 //        Если атака дракона превышает значение жизни копейщика (например, у копейщика жизни – 10, а атака – 15),
 //        то умирает несколько копейщиков,
 //        а оставшийся урон идет одному из копейщиков.
-//        Например, жизнь дракона – 500, атака – 55, жизнь одно- го копейщика – 10, атака –10,
+//        Например, жизнь дракона – 500, атака – 55, жизнь одного копейщика – 10, атака –10,
 //        а количество копейщиков при данных условиях – 20.
 //        Лог боя для данного примера должен выглядеть так:
 //        Итерация 15
@@ -34,21 +34,21 @@ public class Main {
         System.out.println("Введите уровень здоровья дракона и его атаку");
         int hpDragon = in.nextInt();
         int dmgDragon = in.nextInt();
-        System.out.println("Введите уровень здоровья копейщика и его атаку");
+        System.out.println("Введите уровень здоровья копейщика, его атаку и количество копейщиков в отряде");
         int hpSpearman = in.nextInt();
         int dmgSpearman = in.nextInt();
+        int sizeSquad = in.nextInt();
 
         Dragon dragon = new Dragon(hpDragon,dmgDragon);
-        Spearman spearman = new Spearman(hpSpearman, dmgSpearman);
-        Squad squad = new Squad(5,hpSpearman, dmgSpearman);
-        System.out.println(squad);
-        System.out.println(squad.damageSquad());
-        squad.destructionSquad(dmgDragon);
-        System.out.println(squad.damageSquad());
-        System.out.println(squad);
+        Squad squad = new Squad(sizeSquad,hpSpearman, dmgSpearman);
 
-
-
-        //System.out.printf("%d %d", hpDragon, dmgDragon);
+        while (squad.healthSquad() > 0){
+            System.out.println(dragon.destructionDragon(squad.damageSquad()));
+            if (dragon.getHealth() <= 0){
+                break;
+            }
+            squad.destructionSquad(dmgDragon);
+            System.out.println(squad.massage(dmgDragon));
+        }
     }
 }
